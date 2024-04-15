@@ -1,0 +1,27 @@
+apiVersion: radix.equinor.com/v1
+kind: RadixApplication
+metadata:
+  name: edc2023-radix-wi-<username>
+spec:
+  environments:
+    - name: dev
+      build:
+        from: main
+  components:
+    - name: web
+      src: /src/web
+      # identity:
+      #   azure:
+      #     clientId: <clientId>
+      ports:
+        - name: http
+          port: 5000
+      publicPort: http
+      resources:
+        request:
+          cpu: 100Mi
+          memory: 100M
+      variables:
+        ASPNETCORE_URLS: http://*:5000
+        DB_CONNECTION_STRING: "Server=<insert name here>; Database=moviedb; Authentication=Active Directory Managed Identity; Encrypt=True"
+      
